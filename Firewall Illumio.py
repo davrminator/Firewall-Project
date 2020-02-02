@@ -29,7 +29,7 @@ class Firewall:
 				part = self.parse_port(row[2])
 				if len(part) == 2:
 					if self.port >= part[0] and self.port <= part[1]:
-						#print("I am here")
+						#print("I am here", index, part[0], part[1], self.port)
 						part2 = self.parse_ip(row[3])
 						part3 = self.parse_ip(self.ip)
 						#print "Yhis is part 2 ", self.ip
@@ -46,7 +46,7 @@ class Firewall:
 						return final
 			
 			index += 1
-			if index >= 4:
+			if index >= len(self.array):
 				return False
 
 
@@ -55,8 +55,11 @@ class Firewall:
 		parts = []
 		if port.find("-") != -1:
 			#print("dash found")
-			parts.append(port[0:port.find("-")])
-			parts.append(port[port.find("-") + 1:])
+			port1 = port[0:port.find("-")]
+			port2 = port[port.find("-") + 1:]
+
+			parts.append(int(port1))
+			parts.append(int(port2))
 			return parts
 		else:
 			parts.append(port)
@@ -94,11 +97,7 @@ class Firewall:
 				return False
 
 
-
-
-
 #enter your input in "arguments" this variable or on the console
-#print(arguments)
 arguments = input("Enter input in exactly this format: 'direction,protocol,port,ip)': ") 
 args = arguments.split(",")
 #print(args)
